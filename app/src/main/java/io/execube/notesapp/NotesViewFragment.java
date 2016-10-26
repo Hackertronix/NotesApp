@@ -50,13 +50,11 @@ public class NotesViewFragment extends Fragment {
 
 
         noteListView.setEmptyView(emptyView);
+
         noteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
-
-
-                communicator.respond(id);
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                communicator.respond(l);
             }
         });
         return view;
@@ -96,10 +94,19 @@ public class NotesViewFragment extends Fragment {
 
     private void deleteAllNotes() {
 
-      SQLiteDatabase db= mHelper.getWritableDatabase();
 
-        db.delete(NoteContract.NoteEntry.TABLE_NAME,null,null);
-        Toast.makeText(getContext(), "ALL NOTES DELETED", Toast.LENGTH_SHORT).show();
+        if (noteListView.getCount() > 0) {
+            SQLiteDatabase db = mHelper.getWritableDatabase();
+
+            db.delete(NoteContract.NoteEntry.TABLE_NAME, null, null);
+            Toast.makeText(getContext(), "ALL NOTES DELETED", Toast.LENGTH_SHORT).show();
+
+        }
+
+        else
+        {
+            Toast.makeText(getContext(), "NO NOTES TO DELETE!!! ADD A NOTE", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

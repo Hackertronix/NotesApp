@@ -60,8 +60,16 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Fra
     public void respond(long id) {
 
         FragmentManager manager= getSupportFragmentManager();
-        EditorFragment fragment= (EditorFragment) manager.findFragmentById(R.id.container);
+        EditorFragment fragment= new EditorFragment();
 
-        fragment.loadEditorWithData(id);
+        Bundle bundle= new Bundle();
+        bundle.putLong("ID",id);
+
+        fragment.setArguments(bundle);
+        manager.beginTransaction()
+                .replace(R.id.container,fragment)
+                .addToBackStack(null)
+                .commit();
+        //fragment.loadEditorWithData(id);
     }
 }
